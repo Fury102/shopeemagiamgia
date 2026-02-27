@@ -57,6 +57,7 @@ Copy Link
 const affId = "17318400278";
 const workerBase = "https://old-shape-d3d6.binhday102.workers.dev/?url=";
 
+// Resolve link rút gọn
 async function resolveShortLink(url){
 const response = await fetch(workerBase + encodeURIComponent(url));
 const data = await response.json();
@@ -64,11 +65,32 @@ if(!data.success) throw new Error("Không thể resolve link.");
 return data.resolved;
 }
 
+// ===== HÀM ĐÃ SỬA MẠNH HƠN =====
 function extractProductInfo(url){
-const match = url.match(/(\d+)\/(\d+)/);
-if(!match) return null;
-return { shopId: match[1], itemId: match[2] };
+
+try {
+
+const urlObj = new URL(url);
+const pathParts = urlObj.pathname.split("/").filter(Boolean);
+
+// Tìm tất cả số trong URL
+const numbers = url.match(/\d+/g);
+
+if (!numbers || numbers.length < 2) return null;
+
+// Lấy 2 số cuối cùng
+const shopId = numbers[numbers.length - 2];
+const itemId = numbers[numbers.length - 1];
+
+return { shopId, itemId };
+
+} catch {
+return null;
 }
+
+}
+
+// ================================
 
 async function processUrl(){
 
@@ -94,6 +116,8 @@ let targetLink=input;
 
 try{
 const urlObj=new URL(input);
+
+// Nếu KHÔNG phải shopee.vn thì resolve
 if(!urlObj.hostname.includes("shopee.vn")){
 targetLink=await resolveShortLink(input);
 }
@@ -111,6 +135,7 @@ btn.disabled=false;
 return;
 }
 
+// Ép về chuẩn /product/
 const cleanUrl=`https://shopee.vn/product/${productInfo.shopId}/${productInfo.itemId}`;
 const encoded=encodeURIComponent(cleanUrl);
 
