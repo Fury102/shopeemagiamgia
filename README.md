@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Tạo Link Affiliate Shopee</title>
+<title>Tool Tạo Link Affiliate Shopee</title>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -71,7 +71,7 @@ Copy Link
 const affId = "17318400278";
 const workerBase = "https://old-shape-d3d6.binhday102.workers.dev/?url=";
 
-// Resolve short link
+// Resolve link rút gọn
 async function resolveShortLink(url) {
 
 const workerURL = workerBase + encodeURIComponent(url);
@@ -86,7 +86,7 @@ if (!data.success) {
 return data.resolved;
 }
 
-// Trích xuất SHOPID + ITEMID
+// Trích SHOPID + ITEMID
 function extractProductInfo(url) {
 
 const regex = /(\d+)\/(\d+)/;
@@ -124,16 +124,16 @@ let targetLink = input;
 
 try {
 
-if (input.includes("s.shopee.vn")) {
+const urlObj = new URL(input);
+
+// Nếu KHÔNG phải domain shopee.vn thì resolve
+if (!urlObj.hostname.includes("shopee.vn")) {
     targetLink = await resolveShortLink(input);
 }
 
 } catch (err) {
-errorBox.innerText = err.message;
-errorBox.classList.remove("hidden");
-btn.innerText = "Tạo Link Affiliate";
-btn.disabled = false;
-return;
+// Nếu URL lỗi format vẫn thử resolve
+targetLink = await resolveShortLink(input);
 }
 
 // Trích ID
@@ -147,7 +147,7 @@ btn.disabled = false;
 return;
 }
 
-// Luôn build lại chuẩn /product/
+// Luôn ép về chuẩn /product/
 const cleanProductUrl =
 `https://shopee.vn/product/${productInfo.shopId}/${productInfo.itemId}`;
 
