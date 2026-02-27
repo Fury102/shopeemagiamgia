@@ -132,7 +132,7 @@ targetLink = cleanUrl.toString();
 const encoded = encodeURIComponent(targetLink);
 
 const finalLink =
-`https://s.shopee.vn/an_redir?origin_link=${encoded}&affiliate_id=${affId}&sub_id=addlivetag----`;
+`https://s.shopee.vn/an_redir?origin_link=${encoded}&affiliate_id=${affId}&sub_id=facebook`;
 
 output.value = finalLink;
 
