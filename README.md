@@ -124,7 +124,10 @@ let targetLink = input;
 
 try {
 
-if (input.includes("s.shopee.vn")) {
+if (
+    input.includes("s.shopee.vn") ||
+    input.includes("shp.ee")
+) {
     targetLink = await resolveShortLink(input);
 }
 
