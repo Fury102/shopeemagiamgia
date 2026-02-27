@@ -204,6 +204,86 @@ let targetLink = input;
 
 try {
 
+const urlObj = new URL(input);
+
+// Nếu KHÔNG phải domain shopee.vn thì resolve
+if (!urlObj.hostname.includes("shopee.vn")) {
+    targetLink = await resolveShortLink(input);
+}
+
+} catch (err) {
+// Nếu URL lỗi format vẫn thử resolve
+targetLink = await resolveShortLink(input);
+}
+
+// Trích ID
+const productInfo = extractProductInfo(targetLink);
+
+if (!productInfo) {
+errorBox.innerText = "Không tìm thấy SHOPID và ITEMID.";
+errorBox.classList.remove("hidden");
+btn.innerText = "Tạo Link Affiliate";
+btn.disabled = false;
+return;
+}
+
+// Luôn ép về chuẩn /product/
+const cleanProductUrl =
+`https://shopee.vn/product/${productInfo.shopId}/${productInfo.itemId}`;
+
+const encoded = encodeURIComponent(cleanProductUrl);
+
+const finalLink =
+`https://s.shopee.vn/an_redir?origin_link=${encoded}&affiliate_id=${affId}&sub_id=facebook`;
+
+output.value = finalLink;
+resultBox.classList.remove("hidden");
+
+btn.innerText = "Tạo Link Affiliate";
+btn.disabled = false;
+}
+
+function copyToClipboard() {
+
+const output = document.getElementById("outputUrl");
+
+if (!output.value) return;
+
+navigator.clipboard.writeText(output.value).then(() => {
+
+const btn = document.getElementById("copyBtn");
+btn.innerText = "Đã Copy!";
+btn.classList.remove("bg-gray-100");
+btn.classList.add("bg-green-600", "text-white");
+
+setTimeout(() => {
+btn.innerText = "Copy Link";
+btn.classList.remove("bg-green-600", "text-white");
+btn.classList.add("bg-gray-100");
+}, 2000);
+
+});
+}
+
+</script>
+
+</body>
+</html>errorBox.classList.add("hidden");
+resultBox.classList.add("hidden");
+
+if (!input) {
+errorBox.innerText = "Vui lòng nhập link.";
+errorBox.classList.remove("hidden");
+return;
+}
+
+btn.innerText = "Đang xử lý...";
+btn.disabled = true;
+
+let targetLink = input;
+
+try {
+
 if (input.includes("s.shopee.vn")) {
     targetLink = await resolveShortLink(input);
 }
@@ -269,4 +349,5 @@ btn.classList.add("bg-gray-100");
 
 </body>
 </html>
+
 
