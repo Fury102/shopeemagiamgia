@@ -57,14 +57,6 @@ Bắt Đầu Tạo
 Copy rồi bình luận link này vào bài viết bất kỳ trên facebook rồi mở mua theo link vừa bình luận:
 </label>
 
-<div class="flex flex-col gap-4">
-
-<textarea
-id="outputUrl"
-readonly
-class="w-full h-28 p-3 border border-green-200 bg-green-50 rounded-lg text-gray-700 font-mono text-sm resize-none"
-></textarea>
-
 <div class="flex gap-3">
 
 <!-- FACEBOOK BUTTON -->
@@ -72,9 +64,6 @@ class="w-full h-28 p-3 border border-green-200 bg-green-50 rounded-lg text-gray-
 onclick="openFacebook()"
 class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-semibold text-white bg-[#1877F2] hover:bg-[#166FE5] transition"
 >
-<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-<path d="M8 0C3.58 0 0 3.58 0 8c0 4.42 3.58 8 8 8 4.42 0 8-3.58 8-8 0-4.42-3.58-8-8-8zM10.93 8H9.5v5H7V8H5.93V6.5H7V5.36C7 4.2 7.69 3.5 8.85 3.5H10v1.5H9.07c-.32 0-.57.25-.57.57V6.5h1.5L10.93 8z"/>
-</svg>
 CMT trên FB
 </button>
 
@@ -84,10 +73,6 @@ onclick="copyToClipboard()"
 id="copyBtn"
 class="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-semibold border border-[#1877F2] text-[#1877F2] hover:bg-blue-50 transition"
 >
-<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-<path d="M10 1.5H3A1.5 1.5 0 0 0 1.5 3v9A1.5 1.5 0 0 0 3 13.5h7A1.5 1.5 0 0 0 11.5 12V3A1.5 1.5 0 0 0 10 1.5zM3 2.5h7a.5.5 0 0 1 .5.5V4H2.5V3a.5.5 0 0 1 .5-.5zM2.5 12V5H10.5v7a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5z"/>
-<path d="M13 3h-1v1h1a.5.5 0 0 1 .5.5V13a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5v-1H4v1A1.5 1.5 0 0 0 5.5 15h7A1.5 1.5 0 0 0 14 13.5V4.5A1.5 1.5 0 0 0 12.5 3H13z"/>
-</svg>
 Copy Link
 </button>
 
@@ -95,15 +80,16 @@ Copy Link
 </div>
 </div>
 </div>
-</div>
 
-<!-- TOAST TOP -->
+<!-- TOAST -->
 <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 hidden"></div>
 
 <script>
 
 const affId = "17318400278";
 const workerBase = "https://old-shape-d3d6.binhday102.workers.dev/?url=";
+
+let generatedLink = "";
 
 // Toast
 function showToast(message, color="bg-black") {
@@ -165,7 +151,6 @@ async function processUrl() {
 const input = document.getElementById("inputUrl").value.trim();
 const errorBox = document.getElementById("errorBox");
 const resultBox = document.getElementById("resultBox");
-const output = document.getElementById("outputUrl");
 const btn = document.getElementById("mainBtn");
 
 errorBox.classList.add("hidden");
@@ -209,10 +194,9 @@ const cleanProductUrl =
 
 const encoded = encodeURIComponent(cleanProductUrl);
 
-const finalLink =
+generatedLink =
 `https://s.shopee.vn/an_redir?origin_link=${encoded}&affiliate_id=${affId}&sub_id=facebook`;
 
-output.value = finalLink;
 resultBox.classList.remove("hidden");
 
 showToast("Tạo link thành công!", "bg-green-600");
@@ -224,18 +208,21 @@ btn.disabled = false;
 // Copy
 function copyToClipboard() {
 
-const output = document.getElementById("outputUrl");
-if (!output.value) return;
+if (!generatedLink) return;
 
-navigator.clipboard.writeText(output.value).then(() => {
-
+navigator.clipboard.writeText(generatedLink).then(() => {
 showToast("Đã copy link thành công!", "bg-green-600");
-
 });
 }
 
 // Open Facebook
 function openFacebook() {
+
+if (!generatedLink) {
+showToast("Vui lòng tạo link trước.", "bg-red-600");
+return;
+}
+
 const appLink = "fb://facewebmodal/f?href=https://www.facebook.com/share/g/1DDF79v3b3/";
 const webLink = "https://www.facebook.com/share/g/1DDF79v3b3/";
 
