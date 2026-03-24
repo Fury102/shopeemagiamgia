@@ -87,7 +87,7 @@ Copy Link
 <script>
 
 const affId = "17318400278";
-const workerBase = "https://old-shape-d3d6.binhday102.workers.dev/?url=";
+const workerBase = "https://resolve-link.binhday102.workers.dev/?url=";
 
 let generatedLink = "";
 
