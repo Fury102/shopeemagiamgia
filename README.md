@@ -223,8 +223,8 @@ showToast("Vui lòng tạo link trước.", "bg-red-600");
 return;
 }
 
-const appLink = "fb://facewebmodal/f?href=https://www.facebook.com/share/g/1DDF79v3b3/";
-const webLink = "https://www.facebook.com/share/g/1DDF79v3b3/";
+const appLink = "fb://facewebmodal/f?href=https://www.facebook.com/profile.php?id=61582739492441";
+const webLink = "https://www.facebook.com/profile.php?id=61582739492441";
 
 window.location.href = appLink;
 
