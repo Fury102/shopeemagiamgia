@@ -87,7 +87,7 @@ Copy Link
 <script>
 
 const affId = "17318400278";
-const workerBase = "https://resolve-link.binhday102.workers.dev/?url=";
+const workerBase = "https://linkshopeebinhday102.workers.dev/?url=";
 
 let generatedLink = "";
 
