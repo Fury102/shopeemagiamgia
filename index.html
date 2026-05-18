@@ -223,8 +223,8 @@ showToast("Vui lòng tạo link trước.", "bg-red-600");
 return;
 }
 
-const appLink = "fb://facewebmodal/f?href=https://www.facebook.com/groups/1859490858250016/permalink/1985860062279761/?ref=share";
-const webLink = "https://www.facebook.com/groups/1859490858250016/permalink/1985860062279761/?ref=share";
+const appLink = "fb://facewebmodal/f?href=https://www.facebook.com/share/p/1GyiMBKSJw/";
+const webLink = "https://www.facebook.com/share/p/1GyiMBKSJw/";
 
 window.location.href = appLink;
 
