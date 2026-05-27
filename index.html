@@ -223,8 +223,8 @@ showToast("Vui lòng tạo link trước.", "bg-red-600");
 return;
 }
 
-const appLink = "fb://facewebmodal/f?href=https://www.facebook.com/groups/1859490858250016/permalink/2049226805943086/?rdid=TAOqCcKPPLlZ0Z49#";
-const webLink = "https://www.facebook.com/groups/1859490858250016/permalink/2049226805943086/?rdid=TAOqCcKPPLlZ0Z49#";
+const appLink = "fb://facewebmodal/f?href=https://www.facebook.com/groups/1859490858250016/permalink/2056802091852224/?rdid=LfKE830G8d2jIFpJ#";
+const webLink = "https://www.facebook.com/groups/1859490858250016/permalink/2056802091852224/?rdid=LfKE830G8d2jIFpJ#";
 
 window.location.href = appLink;
 
